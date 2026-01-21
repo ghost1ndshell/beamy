@@ -1,6 +1,8 @@
 defmodule BeamyUiWeb.RoomChannel do
   use BeamyUiWeb, :channel
 
+  alias BeamyUiWeb.Presence
+
   @impl true
   def join(
         "room:" <> room_id,
