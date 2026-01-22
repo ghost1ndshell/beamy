@@ -12,6 +12,10 @@ defmodule BeamyUiWeb.RoomChannel do
         } = _payload,
         socket
       ) do
+    # notifier uses PubSub with {event, payload} tuples,
+    # so is expected to subscribe in the channel process.
+    Phoenix.PubSub.subscribe(Beamy.PubSub, "room:#{room_id}")
+
     case BeamyCore.join_room(room_id, token, %{user_id: user_id}) do
       {:ok, %{room_salt_b64: room_salt_b64}} ->
         socket =
@@ -73,5 +77,12 @@ defmodule BeamyUiWeb.RoomChannel do
         push(socket, "error", %{reason: "room_not_found"})
         {:noreply, socket}
     end
+  end
+
+  # Core broadcasts -> channel receives via PubSub -> channel pushes to connected clients
+  @impl true
+  def handle_info({event, payload}, socket) when is_binary(event) do
+    push(socket, event, payload)
+    {:noreply, socket}
   end
 end
