@@ -1,5 +1,4 @@
 defmodule BeamyCore.RoomServer do
-  alias Hex.API.Key
   use GenServer
 
   def start_link(opts) do
@@ -39,6 +38,7 @@ defmodule BeamyCore.RoomServer do
   """
   @impl true
   def handle_call({:publish, payload}, _from, state) do
+    notifier().broadcast_room(state.room_id, "ciphertext", payload)
     {:reply, :ok, state}
   end
 

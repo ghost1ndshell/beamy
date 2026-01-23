@@ -5,8 +5,7 @@ defmodule BeamyCore.Application do
   def start(_type, _args) do
     children = [
       {Registry, keys: :unique, name: BeamyCore.RoomRegistry},
-      {DynamicSupervisor, strategy: :one_for_one, name: BeamyCore.RoomSupervisor},
-      BeamyCore.RateLimit
+      {DynamicSupervisor, strategy: :one_for_one, name: BeamyCore.RoomSupervisor}
     ]
 
     opts = [strategy: :one_for_one, name: BeamyCore.Supervisor]
