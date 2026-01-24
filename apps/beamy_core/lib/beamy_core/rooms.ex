@@ -9,7 +9,7 @@ defmodule BeamyCore.Rooms do
 
     spec = {RoomServer, room_id: room_id, token: token, room_salt_b64: room_salt_b64}
 
-    case DynamicSupervisor.start_child(BeamyCore.RoomServer, spec) do
+    case DynamicSupervisor.start_child(BeamyCore.RoomSupervisor, spec) do
       {:ok, _pid} ->
         {:ok, %{room_id: room_id, token: token, room_salt_b64: room_salt_b64}}
 
