@@ -1,6 +1,16 @@
 defmodule BeamyUiWeb.Router do
   use BeamyUiWeb, :router
 
+  pipeline :api do
+    plug :accepts, ["json"]
+  end
+
+  scope "/api", BeamyUiWeb do
+    pipe_through :api
+
+    post "/rooms", RoomController, :create
+  end
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -9,21 +19,6 @@ defmodule BeamyUiWeb.Router do
     plug :protect_from_forgery
     plug :put_secure_browser_headers
   end
-
-  pipeline :api do
-    plug :accepts, ["json"]
-  end
-
-  scope "/", BeamyUiWeb do
-    pipe_through :browser
-
-    get "/", PageController, :index
-  end
-
-  # Other scopes may use custom stacks.
-  # scope "/api", BeamyUiWeb do
-  #   pipe_through :api
-  # end
 
   # Enables LiveDashboard only for development
   #
