@@ -1,18 +1,10 @@
 defmodule BeamyCore do
   @moduledoc """
-  Documentation for `BeamyCore`.
+  `BeamyCore` facade used by controller/channel.
   """
+  alias BeamyCore.Rooms
 
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> BeamyCore.hello()
-      :world
-
-  """
-  def hello do
-    :world
-  end
+  defdelegate create_room(attrs \\ %{}), to: Rooms
+  defdelegate join_room(room_id, token, user_meta), to: Rooms
+  defdelegate publish(room_id, payload), to: Rooms
 end

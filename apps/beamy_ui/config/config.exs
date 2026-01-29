@@ -7,6 +7,9 @@
 # General application configuration
 import Config
 
+# Configure Core -> web notifier
+config :beamy_core, :notifier, BeamyUiWeb.Notifier
+
 # Configures the endpoint
 config :beamy_ui, BeamyUiWeb.Endpoint,
   url: [host: "localhost"],
