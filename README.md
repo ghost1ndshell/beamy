@@ -1,4 +1,3 @@
 # Beamy
 
-**TODO: Add description**
-
+Relay-only E2EE chat.
